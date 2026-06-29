@@ -1,4 +1,9 @@
-# Larose Christian Academy — School Website
+# 🏫 Larose Christian Academy — School Website
+
+> ⚠️ **CRITICAL: OWNERSHIP** — This site belongs to **Anne** (Jonathan's mom).
+> **DO NOT** mix Anne's credentials with Jonathan's accounts/keys/forms.
+> Jonathan owns techsaasstack.com, crypto bots, Gumroad books — those are his.
+> This site is ONLY Anne's. Separate everything.
 
 **Purpose:** Private Christian school website — enrollment, fees, payments.
 
@@ -45,14 +50,25 @@ npx next start -p 3000  # Start server
 - 🔴 Supabase not created (no database tables)
 - 🔴 Stripe webhook secret missing from .env.local
 - 🔴 SMTP not configured
-- 🔴 Not deployed to Vercel (local-only via tunnel)
+| 🔴 Not deployed to Vercel (use anneb7669@gmail.com)
 
-## Contact Form
+## 💌 Contact Form — ANNE'S ONLY
 
-- **Formspree endpoint:** `https://formspree.io/f/mykqplgw` (form ID: mykqplgw)
-- **Email notifications sent to:** larosechristianacademy@gmail.com
+- **Formspree endpoint:** `https://formspree.io/f/mykqplgw` (form ID: mykqplgw) — this is **Anne's form**, NOT Jonathan's
+- **Jonathan's Formspree IDs (DO NOT USE HERE):** `xnjkzgbz` (newsletter), `xeebzppr` (contact) — these are for techsaasstack.com only
+- **Email notifications go to:** larosechristianacademy@gmail.com
 - **Dashboard:** https://formspree.io/forms/mykqplgw
 - Form uses fetch/AJAX submission (no page reload). Includes success/error/loading states.
 - Spam protection: hidden `_gotcha` honeypot field included.
+
+## 🔐 Anne's Credentials (for deployments & backend)
+
+| Service | Value |
+|---------|-------|
+| **Supabase Project** | `nwtsvggkchyjuwnmcrkmi` |
+| **Supabase Publishable Key** | Stored in memory |
+| **Supabase Secret Key** | Stored in memory |
+| **Vercel Email** | `anneb7669@gmail.com` |
+| **Formspree (contact)** | `mykqplgw → larosechristianacademy@gmail.com` |
 
 **NOTE:** This is Next.js 16 — breaking changes from earlier versions. Read `node_modules/next/dist/docs/` before writing code. Heed deprecation notices.

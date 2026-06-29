@@ -5,16 +5,10 @@ export const SCHOOL_CONFIG: SchoolConfig = {
   tagline: 'Supporting Homeschool Families Across America',
   description:
     'Larose Christian Academy is an Alabama-based church school providing cover school services for homeschooling families. Founded by an ordained minister, we provide the legal oversight, record-keeping, and support families need to homeschool with confidence.',
-<<<<<<< HEAD
   email: 'larosechristianacademy@gmail.com',
   phone: '251-201-9991',
   address: 'Mobile, AL',
-=======
-  email: 'info@larosechristianacademy.com',
-  phone: '(555) 000-0000',
-  address: '123 Main Street, Birmingham, AL 35201',
   formspreeId: 'mykqplgw',
->>>>>>> 5894c2e (Contact form: use Anne's Formspree (mykqplgw), add formspreeId to config)
 }
 
 export const COVERED_STATES: StateInfo[] = [
