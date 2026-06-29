@@ -39,7 +39,6 @@ export default function ContactPage() {
     <div className="min-h-screen">
       {/* 🎨 Gradient Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-pink-500 via-rose-500 to-red-400 px-4 py-20 sm:px-6 lg:px-8">
-        {/* Decorative floating shapes */}
         <div className="absolute -left-12 top-6 h-40 w-40 animate-float rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -right-8 bottom-8 h-48 w-48 animate-float rounded-full bg-rose-300/15 blur-3xl [animation-delay:1s]" />
         <div className="absolute left-1/2 top-4 h-20 w-20 animate-bounce-soft rounded-full bg-amber-200/10 blur-2xl [animation-delay:2s]" />
@@ -144,78 +143,38 @@ export default function ContactPage() {
                     </button>
                   </div>
                 ) : (
-                  <form
-                    className="mt-6 space-y-4"
-                    onSubmit={handleSubmit}
-                  >
+                  <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
                     <input type="text" name="_gotcha" className="hidden" />
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                        Name
-                      </label>
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        required
-                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500"
-                      />
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                      <input id="name" name="name" type="text" required
+                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500" />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500"
-                      />
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                      <input id="email" name="email" type="email" required
+                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500" />
                     </div>
                     <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
-                        Subject
-                      </label>
-                      <input
-                        id="subject"
-                        name="subject"
-                        type="text"
-                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500"
-                      />
+                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700">Subject</label>
+                      <input id="subject" name="subject" type="text"
+                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500" />
                     </div>
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={4}
-                        required
-                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500"
-                      />
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+                      <textarea id="message" name="message" rows={4} required
+                        className="mt-1 block w-full rounded-lg border border-rose-200 px-3 py-2 text-sm focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500" />
                     </div>
-
                     {status === 'error' && (
                       <p className="text-center text-sm font-medium text-red-600">
                         Something went wrong. Please try again or email us directly.
                       </p>
                     )}
-
-                    <button
-                      type="submit"
-                      disabled={status === 'submitting'}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-rose-500 to-pink-600 px-4 py-2 text-sm font-medium text-white shadow-md shadow-rose-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-rose-300 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
+                    <button type="submit" disabled={status === 'submitting'}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-rose-500 to-pink-600 px-4 py-2 text-sm font-medium text-white shadow-md shadow-rose-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-rose-300 disabled:cursor-not-allowed disabled:opacity-60">
                       {status === 'submitting' ? (
-                        <>
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        '✉️ Send Message'
-                      )}
+                        <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</>
+                      ) : '✉️ Send Message'}
                     </button>
                   </form>
                 )}
@@ -224,7 +183,6 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Bottom decoration */}
         <div className="mt-12 flex items-center justify-center gap-3">
           <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
           <span className="animate-float text-lg">💫</span>

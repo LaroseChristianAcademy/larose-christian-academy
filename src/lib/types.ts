@@ -6,6 +6,7 @@ export interface SchoolConfig {
   phone: string
   address: string
   logo_url?: string
+  formspreeId?: string
 }
 
 export interface StateInfo {
