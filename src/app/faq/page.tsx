@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     q: 'How much does it cost?',
-    a: 'Enrollment is $25/month per student. This covers all administrative services including record-keeping, report cards, and transcripts. Cancel anytime.',
+    a: 'Enrollment is $25/month per student for tuition. This covers all administrative services including record-keeping, report cards, and transcripts. Additionally, there is a one-time $75 registration fee to set up your student\'s permanent file and records. Curriculum books are purchased separately. Cancel tuition anytime.',
   },
   {
     q: 'Can I enroll multiple students from the same family?',
@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: 'What if I move to a different state?',
-    a: 'Contact us to discuss your situation. Students who move may be able to continue their enrollment depending on their new state\'s laws.',
+    a: "Contact us to discuss your situation. Students who move may be able to continue their enrollment depending on their new state's laws.",
   },
   {
     q: 'How is Larose Christian Academy different from other cover schools?',
@@ -46,41 +46,84 @@ const faqs = [
   },
 ]
 
+const cardColors = ['purple', 'blue', 'pink', 'green', 'amber', 'rose'] as const
+
 export default function FAQPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-        Frequently Asked Questions
-      </h1>
-      <p className="mt-4 text-lg text-gray-600">
-        Everything you need to know about Larose Christian Academy.
-      </p>
+    <div className="min-h-screen">
+      {/* 🎨 Gradient Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-600 px-4 py-20 sm:px-6 lg:px-8">
+        {/* Decorative floating shapes */}
+        <div className="absolute -left-10 top-8 h-36 w-36 animate-float rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute -right-6 bottom-12 h-48 w-48 animate-float rounded-full bg-sky-300/15 blur-3xl [animation-delay:1s]" />
+        <div className="absolute left-1/4 top-4 h-20 w-20 animate-bounce-soft rounded-full bg-teal-200/10 blur-2xl [animation-delay:2s]" />
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="mb-4 inline-block animate-pop rounded-full bg-white/20 px-4 py-1 text-sm font-medium text-white backdrop-blur-sm">
+            ❓ Got Questions?
+          </span>
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            Frequently Asked Questions
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-cyan-100">
+            Everything you need to know about Larose Christian Academy.
+          </p>
+          <div className="mx-auto mt-8 h-1 w-24 rounded-full bg-gradient-to-r from-pink-400 via-amber-300 to-emerald-300" />
+        </div>
+      </section>
 
-      <div className="mt-10 space-y-4">
-        {faqs.map((faq, i) => (
-          <Card key={i}>
-            <CardContent className="p-5">
-              <h3 className="font-semibold text-gray-900">{faq.q}</h3>
-              <p className="mt-2 text-gray-600">{faq.a}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-2">
+          <span className="emoji-badge">🔍</span>
+          <p className="text-sm font-medium text-gray-500">Popular Questions</p>
+          <div className="ml-auto flex gap-1">
+            {['💬', '📋', '⭐'].map((emoji, i) => (
+              <span key={i} className="animate-wiggle text-lg" style={{ animationDelay: `${i * 200}ms` }}>
+                {emoji}
+              </span>
+            ))}
+          </div>
+        </div>
 
-      <div className="mt-10 rounded-xl bg-emerald-50 p-8 text-center">
-        <h2 className="text-lg font-semibold text-gray-900">
-          Still have questions?
-        </h2>
-        <p className="mt-2 text-gray-600">
-          We&apos;re happy to help. Reach out and we&apos;ll get back to you.
-        </p>
-        <div className="mt-4">
-          <Link href="/contact">
-            <Button>
-              Contact Us
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+        <div className="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <Card key={i} fun={cardColors[i % cardColors.length]}>
+              <CardContent className="p-5">
+                <div className="flex items-start gap-2">
+                  <span className="mt-0.5 flex-shrink-0 text-lg">
+                    {['💡', '✅', '📚', '💰', '👨‍👩‍👧‍👦', '📝', '🎓', '🌍', '🚚', '💎'][i]}
+                  </span>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{faq.q}</h3>
+                    <p className="mt-2 text-gray-600">{faq.a}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="relative mt-12 overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-8 text-center shadow-lg">
+          {/* Decorative blobs */}
+          <div className="absolute -right-8 -top-8 h-32 w-32 animate-float rounded-full bg-white/10 blur-2xl" />
+          <div className="absolute -bottom-6 -left-6 h-24 w-24 animate-bounce-soft rounded-full bg-emerald-200/15 blur-xl [animation-delay:1s]" />
+          <div className="relative z-10">
+            <span className="mb-3 inline-block text-3xl">💬</span>
+            <h2 className="text-lg font-semibold text-white">
+              Still have questions?
+            </h2>
+            <p className="mt-2 text-emerald-100">
+              We&apos;re happy to help. Reach out and we&apos;ll get back to you.
+            </p>
+            <div className="mt-5">
+              <Link href="/contact">
+                <Button variant="gold">
+                  Contact Us
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

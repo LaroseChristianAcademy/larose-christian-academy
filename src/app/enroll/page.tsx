@@ -1,13 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { ALL_STATES, GRADE_OPTIONS } from '@/lib/constants'
-import { CreditCard, CheckCircle } from 'lucide-react'
-import { loadStripe } from '@stripe/stripe-js'
+import { CreditCard, CheckCircle, Sparkles, GraduationCap, FileText } from 'lucide-react'
 
 const stateOptions = ALL_STATES.filter((s) => s.status === 'available').map(
   (s) => ({ value: s.code, label: `${s.name} (${s.code})` })
@@ -19,6 +18,14 @@ export default function EnrollPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [defaultGrade, setDefaultGrade] = useState('')
+
+  // Read URL params for pre-filled values from assessment (client-side to avoid Suspense boundary)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const grade = params.get('grade')
+    if (grade) setDefaultGrade(grade)
+  }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -47,7 +54,6 @@ export default function EnrollPage() {
     }
 
     try {
-      // Step 1: Submit enrollment
       const res = await fetch('/api/enroll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,7 +67,6 @@ export default function EnrollPage() {
 
       const { id: enrollmentId } = await res.json()
 
-      // Step 2: Create Stripe checkout session
       const checkoutRes = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,8 +83,6 @@ export default function EnrollPage() {
       }
 
       const { url } = await checkoutRes.json()
-
-      // Step 3: Redirect to Stripe Checkout
       window.location.href = url
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Submission failed')
@@ -105,209 +108,292 @@ export default function EnrollPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-        Enroll Your Student
-      </h1>
-      <p className="mt-4 text-lg text-gray-600">
-        Complete the form below and pay the $25/month tuition to enroll.
-      </p>
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50/30 via-white to-amber-50/20 pb-16">
+      {/* Hero */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-amber-900 py-16">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-emerald-200 backdrop-blur-sm mb-4">
+            <GraduationCap className="h-4 w-4" />
+            Start Your Journey
+          </div>
+          <h1 className="text-4xl font-bold text-white font-heading sm:text-5xl">
+            Enroll Your Student 🎓
+          </h1>
+          <p className="mt-4 text-lg text-emerald-100/80 max-w-xl mx-auto">
+            Join hundreds of families who homeschool with confidence through Larose Christian Academy.
+          </p>
+        </div>
+      </div>
 
-      {/* Pricing summary */}
-      <Card className="mt-6 border-emerald-200 bg-emerald-50">
-        <CardContent className="flex items-center gap-4 p-5">
-          <CreditCard className="h-8 w-8 text-emerald-600" />
-          <div>
-            <p className="font-semibold text-gray-900">$25/month per student</p>
-            <p className="text-sm text-gray-600">
-              Recurring monthly subscription. Cancel anytime. First payment due at
-              enrollment.
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+        <p className="mt-4 text-lg text-gray-600">
+          Complete the form below to enroll. Your $25/month tuition covers administrative
+          services, record-keeping, and legal oversight. Curriculum books are purchased
+          separately.
+        </p>
+
+        {/* Pricing summary */}
+        <Card fun="amber" className="mt-6">
+          <CardContent className="flex items-center gap-4 p-5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-200 to-amber-100 shadow-sm">
+              <CreditCard className="h-6 w-6 text-amber-700" />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900 flex items-center gap-1">
+                $25/month per student — Tuition Only 💰
+              </p>
+              <p className="text-sm text-gray-600">
+                Recurring monthly subscription. Cancel anytime. First payment due at
+                enrollment.{' '}
+                <strong className="text-amber-700">
+                  Curriculum books are not included and must be purchased separately.
+                </strong>
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Registration Fee Notice */}
+        <Card fun="purple" className="mt-4">
+          <CardContent className="flex items-start gap-4 p-5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-purple-200 to-purple-100 shadow-sm">
+              <FileText className="h-6 w-6 text-purple-700" />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900 flex items-center gap-1 flex-wrap">
+                📋 One-Time Registration Fee — $75
+                <span className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-700">
+                  Due at enrollment
+                </span>
+              </p>
+              <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                A one-time <strong>$75 registration fee</strong> covers the setup
+                of your student&apos;s permanent file, official transcript initiation,
+                record-keeping system configuration, and initial administrative processing.
+                This is a <strong>separate one-time payment</strong> from the $25/month tuition.
+                You&apos;ll be able to pay it after your tuition is processed. 💜
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {defaultGrade && (
+          <div className="mt-4 rounded-xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 p-4 animate-slide-up">
+            <p className="text-sm text-amber-800 flex items-center gap-2">
+              <span className="text-lg">📋</span>
+              <span><span className="font-semibold">Assessment Result:</span> Your student was
+              assessed at <strong>{defaultGrade}</strong>. The grade is pre-selected below —
+              you can change it if needed.</span>
             </p>
           </div>
-        </CardContent>
-      </Card>
+        )}
 
-      {error && (
-        <div className="mt-6 rounded-lg bg-red-50 p-4 text-sm text-red-700">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div className="mt-6 rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700 flex items-center gap-2">
+            <span>⚠️</span> {error}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-8">
-        {/* Parent/Guardian Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Parent / Guardian Information</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-8">
+          {/* Parent/Guardian Information */}
+          <Card fun="blue">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                👨‍👩‍👧‍👦 Parent / Guardian Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Input
+                  id="parent_first_name"
+                  name="parent_first_name"
+                  label="First Name ✏️"
+                  required
+                  placeholder="Jane"
+                />
+                <Input
+                  id="parent_last_name"
+                  name="parent_last_name"
+                  label="Last Name ✏️"
+                  required
+                  placeholder="Smith"
+                />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  label="Email Address 📧"
+                  required
+                  placeholder="jane@example.com"
+                />
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  label="Phone Number 📞"
+                  required
+                  placeholder="(555) 123-4567"
+                />
+              </div>
               <Input
-                id="parent_first_name"
-                name="parent_first_name"
-                label="First Name"
+                id="address_line1"
+                name="address_line1"
+                label="Street Address 🏠"
                 required
-                placeholder="Jane"
-              />
-              <Input
-                id="parent_last_name"
-                name="parent_last_name"
-                label="Last Name"
-                required
-                placeholder="Smith"
-              />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                label="Email Address"
-                required
-                placeholder="jane@example.com"
-              />
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                label="Phone Number"
-                required
-                placeholder="(555) 123-4567"
-              />
-            </div>
-            <Input
-              id="address_line1"
-              name="address_line1"
-              label="Street Address"
-              required
-              placeholder="123 Main Street"
-            />
-            <Input
-              id="address_line2"
-              name="address_line2"
-              label="Apt / Suite (Optional)"
-              placeholder="Apt 4B"
-            />
-            <div className="grid gap-4 sm:grid-cols-3">
-              <Input
-                id="city"
-                name="city"
-                label="City"
-                required
-                placeholder="Birmingham"
-              />
-              <Select
-                id="state"
-                name="state"
-                label="State"
-                required
-                options={stateOptions}
-                placeholder="Select state"
+                placeholder="123 Main Street"
               />
               <Input
-                id="zip"
-                name="zip"
-                label="ZIP Code"
-                required
-                placeholder="35201"
+                id="address_line2"
+                name="address_line2"
+                label="Apt / Suite (Optional)"
+                placeholder="Apt 4B"
               />
-            </div>
-          </CardContent>
-        </Card>
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Input
+                  id="city"
+                  name="city"
+                  label="City 🏙️"
+                  required
+                  placeholder="Mobile"
+                />
+                <Select
+                  id="state"
+                  name="state"
+                  label="State 🗺️"
+                  required
+                  options={stateOptions}
+                  placeholder="Select state"
+                />
+                <Input
+                  id="zip"
+                  name="zip"
+                  label="ZIP Code 📬"
+                  required
+                  placeholder="35201"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-        {/* Student Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Student Information</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
+          {/* Student Information */}
+          <Card fun="green">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                📚 Student Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Input
+                  id="student_first_name"
+                  name="student_first_name"
+                  label="Student First Name ✏️"
+                  required
+                  placeholder="John"
+                />
+                <Input
+                  id="student_last_name"
+                  name="student_last_name"
+                  label="Student Last Name ✏️"
+                  required
+                  placeholder="Smith"
+                />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Select
+                  id="student_grade"
+                  name="student_grade"
+                  label="Grade Level 🎯"
+                  required
+                  options={gradeOptions}
+                  placeholder="Select grade"
+                  value={defaultGrade || ''}
+                  onChange={(e) => setDefaultGrade(e.target.value)}
+                />
+                <Input
+                  id="student_dob"
+                  name="student_dob"
+                  type="date"
+                  label="Date of Birth 🎂"
+                  required
+                />
+              </div>
               <Input
-                id="student_first_name"
-                name="student_first_name"
-                label="Student First Name"
-                required
-                placeholder="John"
+                id="previous_school"
+                name="previous_school"
+                label="Previous School (if applicable) 🏫"
+                placeholder="Name of previous school"
               />
-              <Input
-                id="student_last_name"
-                name="student_last_name"
-                label="Student Last Name"
-                required
-                placeholder="Smith"
-              />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Select
-                id="student_grade"
-                name="student_grade"
-                label="Grade Level"
-                required
-                options={gradeOptions}
-                placeholder="Select grade"
-              />
-              <Input
-                id="student_dob"
-                name="student_dob"
-                type="date"
-                label="Date of Birth"
-                required
-              />
-            </div>
-            <Input
-              id="previous_school"
-              name="previous_school"
-              label="Previous School (if applicable)"
-              placeholder="Name of previous school"
-            />
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Additional Notes */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Additional Information</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <label
-              htmlFor="notes"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Notes or Questions (Optional)
-            </label>
-            <textarea
-              id="notes"
-              name="notes"
-              rows={3}
-              className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              placeholder="Any questions or additional information..."
-            />
-          </CardContent>
-        </Card>
-
-        {/* Terms */}
-        <Card>
-          <CardContent className="p-6">
-            <label className="flex items-start gap-3">
-              <input
-                type="checkbox"
-                name="agree_to_terms"
-                required
-                className="mt-1 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+          {/* Additional Notes */}
+          <Card fun="purple">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                💬 Additional Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <label
+                htmlFor="notes"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Notes or Questions (Optional)
+              </label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows={3}
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-all duration-200 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:shadow-lg focus:shadow-purple-500/10 hover:border-gray-400"
+                placeholder="Any questions or additional information... 📝"
               />
-              <span className="text-sm text-gray-600">
-                I confirm that the information provided is accurate. I understand
-                that this enrollment is subject to review and approval by Larose
-                Christian Academy after payment is processed. By enrolling, I agree
-                to the $25/month subscription fee.
+            </CardContent>
+          </Card>
+
+          {/* Terms */}
+          <Card fun="pink">
+            <CardContent className="p-6">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="agree_to_terms"
+                  required
+                  className="mt-1 h-5 w-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 transition-all duration-200"
+                />
+                <span className="text-sm text-gray-600 leading-relaxed">
+                  ✅ I confirm that the information provided is accurate. I understand
+                  that this enrollment is subject to review and approval by Larose
+                  Christian Academy after payment is processed. By enrolling, I agree
+                  to the $25/month tuition fee. I understand that curriculum books are not
+                  included and must be purchased separately.
+                </span>
+              </label>
+            </CardContent>
+          </Card>
+
+          <Button
+            type="submit"
+            size="lg"
+            variant="gold"
+            className="w-full text-base shadow-xl shadow-amber-500/20"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="flex items-center gap-2">⏳ Processing...</span>
+            ) : (
+              <span className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5" />
+                Enroll & Pay Tuition — $25/month
               </span>
-            </label>
-          </CardContent>
-        </Card>
-
-        <Button type="submit" size="lg" className="w-full" disabled={loading}>
-          {loading ? 'Processing...' : 'Enroll & Pay $25/month'}
-        </Button>
-      </form>
+            )}
+          </Button>
+        </form>
+      </div>
     </div>
   )
 }

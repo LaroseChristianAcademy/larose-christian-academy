@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   html {
@@ -27,6 +25,15 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  .gradient-text-rainbow {
+    background-image: linear-gradient(135deg, #f472b6, #8b5cf6, #3b82f6, #10b981, #f59e0b, #ef4444);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
   }
 
   .gradient-heading {
@@ -58,6 +65,65 @@
 
   .glow-amber {
     box-shadow: 0 0 40px -12px rgba(217, 119, 6, 0.2);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 40px -12px rgba(236, 72, 153, 0.25);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 40px -12px rgba(139, 92, 246, 0.25);
+  }
+
+  .glow-sky {
+    box-shadow: 0 0 40px -12px rgba(14, 165, 233, 0.25);
+  }
+
+  /* Fun gradient card backgrounds */
+  .card-fun-green {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5, #a7f3d0);
+  }
+  .card-fun-pink {
+    background: linear-gradient(135deg, #fdf2f8, #fce7f3, #fbcfe8);
+  }
+  .card-fun-purple {
+    background: linear-gradient(135deg, #f5f3ff, #ede9fe, #ddd6fe);
+  }
+  .card-fun-blue {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe, #bae6fd);
+  }
+  .card-fun-amber {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7, #fde68a);
+  }
+  .card-fun-rose {
+    background: linear-gradient(135deg, #fff1f2, #ffe4e6, #fecdd3);
+  }
+
+  /* Section dividers */
+  .divider-wave {
+    position: relative;
+    height: 60px;
+  }
+  .divider-wave::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23f0fdf4' d='M0,30 C360,60 720,0 1080,30 C1260,45 1440,30 1440,30 L1440,0 L0,0 Z'/%3E%3C/svg%3E") no-repeat bottom;
+    background-size: cover;
+  }
+
+  /* Fun emoji badge */
+  .emoji-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
   }
 }
 
@@ -119,6 +185,56 @@
   50% { opacity: 0.8; }
 }
 
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes wobble {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(-5px) rotate(-2deg); }
+  30% { transform: translateX(5px) rotate(2deg); }
+  45% { transform: translateX(-3px) rotate(-1deg); }
+  60% { transform: translateX(3px) rotate(1deg); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes tada {
+  0% { transform: scale(1) rotate(0); }
+  10%, 20% { transform: scale(0.9) rotate(-3deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+  40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -129,4 +245,53 @@
 
 .animate-pulse-soft {
   animation: pulse-soft 4s ease-in-out infinite;
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 2s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.animate-wobble:hover {
+  animation: wobble 0.6s ease-in-out;
+}
+
+.animate-pop:hover {
+  animation: pop 0.3s ease-in-out;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-tada:hover {
+  animation: tada 0.8s ease-in-out;
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+/* Rainbow divider */
+.divider-rainbow {
+  height: 4px;
+  background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6, #f472b6);
+  background-size: 300% 100%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* Sparkle dots background */
+.bg-sparkles {
+  background-image: radial-gradient(circle, #059669 1px, transparent 1px);
+  background-size: 30px 30px;
 }

@@ -77,6 +77,15 @@ export async function POST(request: Request) {
       if (studentError) {
         console.error('Failed to create student record:', studentError)
       }
+
+      // Send enrollment confirmation email with curriculum book info
+      const { sendEnrollmentEmail } = await import('@/lib/email')
+      await sendEnrollmentEmail({
+        to: enrollment.email,
+        parentName: `${enrollment.parent_first_name} ${enrollment.parent_last_name}`,
+        studentName: `${enrollment.student_first_name} ${enrollment.student_last_name}`,
+        grade: enrollment.student_grade,
+      })
     }
 
     console.log(`✅ Enrollment ${enrollmentId} approved via Stripe payment`)

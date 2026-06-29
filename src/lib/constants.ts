@@ -5,9 +5,9 @@ export const SCHOOL_CONFIG: SchoolConfig = {
   tagline: 'Supporting Homeschool Families Across America',
   description:
     'Larose Christian Academy is an Alabama-based church school providing cover school services for homeschooling families. Founded by an ordained minister, we provide the legal oversight, record-keeping, and support families need to homeschool with confidence.',
-  email: 'info@larosechristianacademy.com',
-  phone: '(555) 000-0000',
-  address: '123 Main Street, Birmingham, AL 35201',
+  email: 'larosechristianacademy@gmail.com',
+  phone: '251-201-9991',
+  address: 'Mobile, AL',
 }
 
 export const COVERED_STATES: StateInfo[] = [
@@ -94,12 +94,23 @@ export const GRADE_OPTIONS = [
 export const ENROLLMENT_FEE = 0 // Free for initial launch — set later
 export const ANNUAL_TUITION = 300 // $25/month
 
+export const CURRICULUM_BOOKS_URL =
+  'https://www.christianbook.com/page/homeschool/homeschool-curriculum/ace-paces'
+
+export const PAPERWORK_FEE_AMOUNT = 75 // $75 one-time registration fee
+export const PAPERWORK_FEE_NOTE =
+  'A one-time $75 registration fee covers the setup of your student file, transcript initiation, record-keeping system configuration, and initial administrative processing.'
+
+export const CURRICULUM_NOTE =
+  '$25/month tuition covers administrative services, record-keeping, and legal oversight. Curriculum books are purchased separately.'
+
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'States', href: '/states' },
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'FAQ', href: '/faq' },
+  { label: 'Assessment', href: '/assessment' },
   { label: 'Contact', href: '/contact' },
   { label: 'Enroll', href: '/enroll', highlight: true },
 ]
