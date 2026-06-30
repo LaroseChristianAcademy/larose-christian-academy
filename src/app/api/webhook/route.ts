@@ -38,8 +38,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing enrollment_id' }, { status: 400 })
     }
 
-    const { createClient } = await import('@/lib/supabase/server')
-    const supabase = await createClient()
+    // Use admin client (service_role key) to bypass RLS for webhook operations
+    const { createAdminClient } = await import('@/lib/supabase/server')
+    const supabase = createAdminClient()
 
     // Auto-approve the enrollment and mark payment as paid
     const { error: updateError } = await supabase
