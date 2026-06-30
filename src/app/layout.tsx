@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ScrollAnimation from '@/components/ScrollAnimation'
+import Script from 'next/script'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -42,6 +43,12 @@ export default function RootLayout({
         <Navbar />
         <main className="min-h-[calc(100vh-4rem)]">{children}</main>
         <Footer />
+        <Script
+          data-goatcounter="https://larosechristianacademy.goatcounter.com/count"
+          async
+          src="//gc.zgo.at/count.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )

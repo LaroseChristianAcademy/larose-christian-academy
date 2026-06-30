@@ -47,10 +47,10 @@ npx next start -p 3000  # Start server
 
 - ✅ npm run build — 0 errors
 - ✅ Cloudflare tunnel active
-- 🔴 Supabase not created (no database tables)
-- 🔴 Stripe webhook secret missing from .env.local
-- 🔴 SMTP not configured
-| 🔴 Not deployed to Vercel (use anneb7669@gmail.com)
+- ✅ Supabase — 7 tables created (enrollments, students, profiles, newsletter_subscribers, donations, contact_messages, parents)
+- ✅ Stripe webhook configured (checkout.session.completed)
+- ✅ Deployed to Vercel at https://coverschool.vercel.app
+- 🔴 SMTP not configured (env vars empty)
 
 ## 💌 Contact Form — ANNE'S ONLY
 
